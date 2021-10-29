@@ -32,3 +32,11 @@ void APacmanPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 }
 
+void APacmanPawn::SetDirection(const FVector Direction)
+{
+}
+
+void APacmanPawn::OnOverlapBegin(AActor* PlayerActor, AActor* OtherActor)
+{
+}
+

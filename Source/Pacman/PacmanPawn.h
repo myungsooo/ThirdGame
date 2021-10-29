@@ -26,4 +26,22 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+
+protected:
+
+	UPROPERTY(BlueprintReadOnly)
+	bool Frozen = true;
+	
+public:
+	
+	void SetDirection(const FVector Direction);
+	bool IsFrozen() { return Frozen; }
+
+	UFUNCTION(BlueprintCallable)
+		void SetFrozen(bool Value) { Frozen = Value; }
+
+private:
+
+	UFUNCTION()
+		void OnOverlapBegin(AActor* PlayerActor, AActor* OtherActor);
 };
