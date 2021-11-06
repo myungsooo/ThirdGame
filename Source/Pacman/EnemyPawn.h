@@ -6,6 +6,16 @@
 #include "GameFramework/Pawn.h"
 #include "EnemyPawn.generated.h"
 
+
+UENUM(BlueprintType)
+enum class EEnemyState : uint8
+{
+	Default,
+	Idle
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FEnemyStateChangedEvent, EEnemyState, NewState);
+
 UCLASS()
 class PACMAN_API AEnemyPawn : public APawn
 {
@@ -13,17 +23,22 @@ class PACMAN_API AEnemyPawn : public APawn
 
 public:
 	// Sets default values for this pawn's properties
-	AEnemyPawn();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+		EEnemyState State = EEnemyState::Default;
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	UFUNCTION(BlueprintCallable)
+		void Hunt();
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	UFUNCTION(BlueprintCallable)
+		void Idle();
 
+	FEnemyStateChangedEvent& OnStateChanged() { return StateChangedEvent; }
+
+private:
+
+	UPROPERTY(BlueprintAssignable, BlueprintCallable)
+		FEnemyStateChangedEvent StateChangedEvent;
+	
+	
 };
